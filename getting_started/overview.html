@@ -624,6 +624,11 @@
 
 
 <h1 id="overview">Overview</h1>
+<p><img alt="b3scale architecture" loading="lazy" src="/assets/images/b3scale-architecture.png" /></p>
+<figure markdown>
+  <figcaption>b3scale architecture overview</figcaption>
+</figure>
+
 <h2 id="concepts">Concepts</h2>
 <p>BigBlueButton arrives with a simple concept: One API, one frontend, usually Greenlight, authenticated through an API secret. As a scaler and
 load balancer for BigBlueButton, b3scale expands on that by introducing additional concepts:</p>
@@ -642,7 +647,7 @@ load balancer for BigBlueButton, b3scale expands on that by introducing addition
 <li><strong>b3scaled:</strong> The central scaling service that accepts requests from frontends and distributes them to backends</li>
 <li><strong>b3scalectl:</strong> The command line tool, a wrapper</li>
 <li><strong>b3scaleagent:</strong>  An agent process that reports status and health of a backend to the central scaling service using a REST API</li>
-<li><strong>b3scalenoded (<em>deprecated</em>):</strong> Like <em>b3scaleagent</em>, but writes directly to the database </li>
+<li><strong>b3scalenoded (<em>deprecated</em>):</strong> Like <em>b3scaleagent</em>, but connects directly to the database </li>
 </ul>
 
 
