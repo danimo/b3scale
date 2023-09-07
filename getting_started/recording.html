@@ -418,9 +418,60 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Setting up recording
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="recording.html" class="md-nav__link md-nav__link--active">
         Setting up recording
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    How it works
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-the-b3scale-server" class="md-nav__link">
+    On the b3scale server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-the-bigbluebutton-node" class="md-nav__link">
+    On the BigBlueButton node
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -586,6 +637,25 @@
 
 
 <h1 id="setting-up-recording">Setting up recording</h1>
+<p>b3scale can publish recordings recoded on a node and will allow frontends to manage them in three ways:</p>
+<ul>
+<li>Publish a recording</li>
+<li>Unpublish a recording</li>
+<li>Delete a recording</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<h3 id="on-the-b3scale-server">On the b3scale server</h3>
+<p>b3scale expects two directories with full write access to the <code>b3scaled</code> process, passed to the process as environment variables:</p>
+<ul>
+<li><code>B3SCALE_RECORDINGS_PUBLISHED_PATH</code> points to a directory where all published talks will be hosted.</li>
+<li><code>B3SCALE_RECORDINGS_UNPUBLISHED_PATH</code> points to a directory where all unpublished/depublished talks will be hosted</li>
+</ul>
+<p>The playback URL will be created using the host provided via the <code>B3SCALE_RECORDINGS_PLAYBACK_HOST</code> variable. The playback HTTPS host needs to be set up separately and requires (read-only) access to <code>B3SCALE_RECORDINGS_PUBLISHED_PATH</code>.</p>
+<h3 id="on-the-bigbluebutton-node">On the BigBlueButton node</h3>
+<p>Publishing the recordings requires a post-publish hook script to be placed in the <code>in /usr/local/bigbluebutton/core/scripts/post_publish</code>folder on all BBB nodes.</p>
+<p>Depending on your setup you either need to copy (via rsync or scp) to <code>B3SCALE_RECORDINGS_PUBLISHED_PATH</code> on a node that has access to that location, or mount a shared volume.</p>
+<p>Finally, the <code>metadata.xml</code> document, created by the BigBlueButton node for the respective recording, needs to be submitted to <code>recording-import</code> API endpoint on b3scale.</p>
+<p>See <code>examples/post_publish_b3scale_import.rb</code> for a trivial example that assumes that all nodes, the b3scale server and the playback host share the same <code>/var/bigbluebutton</code> directory via a shared filesystem such as NFS or Ceph.</p>
 
 
 
