@@ -3,6 +3,7 @@ package http
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	netHTTP "net/http"
@@ -152,15 +153,43 @@ func decodePath(path string) (string, string) {
 	return tokens[1], tokens[len(tokens)-1]
 }
 
+type HttpError struct {
+	returnCode string
+	messageKey string
+	message    string
+}
+
+func NewHttpError(returnCode, messageKey, message string) HttpError {
+	return HttpError{
+		returnCode: returnCode,
+		messageKey: messageKey,
+		message:    message,
+	}
+}
+
+func (e *HttpError) Error() string {
+	return e.message
+}
+
 // handleAPIError is the error handler function
 // for all API errors. The error will be wrapped into
 // a BBB error response.
 func handleAPIError(c echo.Context, err error) error {
 	// Encode as BBB error
-	res := &bbb.XMLResponse{
-		Returncode: "ERROR",
-		Message:    fmt.Sprintf("%s", err),
-		MessageKey: "b3scale_server_error",
+	var httpError *HttpError
+	if errors.As(err, &httpError) {
+		res := &bbb.XMLResponse{
+			Returncode: httpError.returnCode,
+			Message:    httpError.message,
+			MessageKey: httpError.messageKey,
+		}
+	} else {
+		res := &bbb.XMLResponse{
+			Returncode: "ERROR",
+			Message:    fmt.Sprintf("%s", err),
+			MessageKey: "b3scale_server_error",
+		}
+
 	}
 
 	// Write error response
