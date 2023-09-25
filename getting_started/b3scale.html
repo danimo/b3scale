@@ -670,7 +670,7 @@
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Starting with version 1.0.3, b3scale provides <code>.deb</code> packages for use in Ubuntu. Download the <code>b3scaled-*.deb</code> asset from the <a href="https://github.com/b3scale/b3scale/releases">release page</a> on GitHub. On an Intel/AMD 64 Bit system, install the <code>.deb</code> package like this:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>b3scaled_1.0.3_linux_amd64.deb
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>b3scale_1.0.3_linux_amd64.deb
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -775,13 +775,13 @@ If you have installed <code>b3scale</code> using packages, you can find the sett
 <p>Your database and your TLS terminator are also single points of failure. Make sure to make them redundant as well if you aim for systematic redundancy, and make sure they don't become your weakest link if you scale up <code>b3scaled</code>.</p>
 </div>
 <h2 id="bootstrapping-and-migrations">Bootstrapping and migrations</h2>
-<p>For the next step, you will need the <code>b3scalectl</code> command like utility. Download it from the GitHub release page.</p>
+<p>For the next step, you will need the <code>b3scalectl</code> client tool. Download it from the GitHub release page.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><a href="#__codelineno-10-1"><span class="linenos" data-linenos="1 "></span></a>b3scalectl<span class="w"> </span>--api<span class="w"> </span>https://api.bbb.example.org
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Set up a convenience alias like this:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><a href="#__codelineno-11-1"><span class="linenos" data-linenos="1 "></span></a><span class="nb">export</span><span class="w"> </span><span class="nv">b3scalectl_example</span><span class="o">=</span><span class="s1">&#39;b3scalectl --api https://api.bbb.example.org&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><a href="#__codelineno-11-1"><span class="linenos" data-linenos="1 "></span></a><span class="nb">alias</span><span class="w"> </span><span class="nv">b3scalectl_example</span><span class="o">=</span><span class="s1">&#39;b3scalectl --api https://api.bbb.example.org&#39;</span>
 </span></code></pre></div></p>
 </div>
 <p><code>b3scalectl</code> will now ask for the shared API secret that you provided to <code>b3scaled</code> as <code>B3SCALE_API_JWT_SECRET</code>. It uses this secret to derive

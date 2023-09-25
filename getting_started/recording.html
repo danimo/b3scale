@@ -652,7 +652,7 @@
 </ul>
 <p>The playback URL will be created using the host provided via the <code>B3SCALE_RECORDINGS_PLAYBACK_HOST</code> variable. The playback HTTPS host needs to be set up separately and requires (read-only) access to <code>B3SCALE_RECORDINGS_PUBLISHED_PATH</code>.</p>
 <h3 id="on-the-bigbluebutton-node">On the BigBlueButton node</h3>
-<p>Publishing the recordings requires a post-publish hook script to be placed in the <code>in /usr/local/bigbluebutton/core/scripts/post_publish</code>folder on all BBB nodes.</p>
+<p>Publishing the recordings requires a post-publish hook script to be placed in the in <code>/usr/local/bigbluebutton/core/scripts/post_publish</code>folder on all BBB nodes.</p>
 <p>Depending on your setup you either need to copy (via rsync or scp) to <code>B3SCALE_RECORDINGS_PUBLISHED_PATH</code> on a node that has access to that location, or mount a shared volume.</p>
 <p>Finally, the <code>metadata.xml</code> document, created by the BigBlueButton node for the respective recording, needs to be submitted to <code>recording-import</code> API endpoint on b3scale.</p>
 <p>See <code>examples/post_publish_b3scale_import.rb</code> for a trivial example that assumes that all nodes, the b3scale server and the playback host share the same <code>/var/bigbluebutton</code> directory via a shared filesystem such as NFS or Ceph.</p>
