@@ -14,7 +14,7 @@ import (
 	"sort"
 	"strings"
 
-	b3http "github.com/b3scale/b3scale/pkg/http"
+	b3error "github.com/b3scale/b3scale/pkg/error"
 )
 
 // Well known params
@@ -483,7 +483,7 @@ func (req *Request) Verify() error {
 	if subtle.ConstantTimeCompare(
 		expected,
 		[]byte(req.Checksum)) != 1 {
-		return b3http.NewHttpError("FAILED", "checksumError", "Checksums do not match")
+		return b3error.NewHttpError("FAILED", "checksumError", "Checksums do not match")
 	}
 	return nil
 }

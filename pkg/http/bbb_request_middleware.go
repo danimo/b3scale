@@ -17,6 +17,7 @@ import (
 
 	"github.com/b3scale/b3scale/pkg/bbb"
 	"github.com/b3scale/b3scale/pkg/cluster"
+	b3error "github.com/b3scale/b3scale/pkg/error"
 	"github.com/b3scale/b3scale/pkg/store"
 )
 
@@ -153,38 +154,21 @@ func decodePath(path string) (string, string) {
 	return tokens[1], tokens[len(tokens)-1]
 }
 
-type HttpError struct {
-	returnCode string
-	messageKey string
-	message    string
-}
-
-func NewHttpError(returnCode, messageKey, message string) HttpError {
-	return HttpError{
-		returnCode: returnCode,
-		messageKey: messageKey,
-		message:    message,
-	}
-}
-
-func (e *HttpError) Error() string {
-	return e.message
-}
-
 // handleAPIError is the error handler function
 // for all API errors. The error will be wrapped into
 // a BBB error response.
 func handleAPIError(c echo.Context, err error) error {
 	// Encode as BBB error
-	var httpError *HttpError
+	var httpError *b3error.HttpError
+	var res *bbb.XMLResponse
 	if errors.As(err, &httpError) {
-		res := &bbb.XMLResponse{
-			Returncode: httpError.returnCode,
-			Message:    httpError.message,
-			MessageKey: httpError.messageKey,
+		res = &bbb.XMLResponse{
+			Returncode: httpError.ReturnCode,
+			Message:    httpError.Message,
+			MessageKey: httpError.MessageKey,
 		}
 	} else {
-		res := &bbb.XMLResponse{
+		res = &bbb.XMLResponse{
 			Returncode: "ERROR",
 			Message:    fmt.Sprintf("%s", err),
 			MessageKey: "b3scale_server_error",
