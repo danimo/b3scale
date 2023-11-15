@@ -557,26 +557,6 @@
     Backend states
   </a>
   
-    <nav class="md-nav" aria-label="Backend states">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nodestate" class="md-nav__link">
-    NodeState
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adminstate" class="md-nav__link">
-    AdminState
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -715,7 +695,7 @@
 <h2 id="adding-a-backend">Adding a backend</h2>
 <p>A backend is either autoregistered (by passing <code>-a</code> to <code>b3scaleagent</code>), ending up in <code>init</code> state.
 If autoregistration is disabled, a node can be added manually (see "Adding a backend").</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a>b3scalectl<span class="w"> </span>--api<span class="w"> </span>https://api.bbb.example.org<span class="w"> </span>add<span class="w"> </span>backend<span class="w"> </span>https://node23.bbb.example.org
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a>b3scalectl<span class="w"> </span>--api<span class="w"> </span>https://api.bbb.example.org<span class="w"> </span>add<span class="w"> </span>backend<span class="w"> </span>https://node23.bbb.example.org/bigbluebutton/api/
 </span></code></pre></div>
 <h3 id="assigning-tags">Assigning tags</h3>
 <p>You can assign tags to a node to ensure that only certain frontents can access certain backends. This
@@ -761,21 +741,20 @@ way, you can assign pilot customers to nodes running newer BBB versions or grant
 <li><code>R</code>: Ratio</li>
 </ul>
 <h2 id="backend-states">Backend states</h2>
-<h3 id="nodestate">NodeState</h3>
-<ul>
-<li><strong>init</strong>: The node was freshly initialized</li>
-<li><strong>error</strong>: The node has encountered an error condition</li>
-<li><strong>ready</strong>: The node is ready for use</li>
-<li><strong>stopped</strong>: The node has been stopped</li>
-<li><strong>decommissioned</strong>: The node has been decomissioned</li>
-</ul>
-<h3 id="adminstate">AdminState</h3>
+<p>Backend nodes in b3scale can be in either of the following state:</p>
 <ul>
 <li><strong>init</strong>: The node was freshly initialized</li>
 <li><strong>ready</strong>: The node is has been enabled and is ready for use</li>
 <li><strong>stopped</strong>: The node has been disabled andd is stopped</li>
+<li><strong>error</strong>: An error has occured</li>
 <li><strong>decommissioned</strong>: The node has been decomissioned</li>
 </ul>
+<p>The current state is expressed in the <code>NodeState</code>, which is the acutal state a
+node. The <code>AdminState</code> however is the <em>desired</em>  state, usually mandated by an
+administrative change. The two might not be identical all the time, e.g. when a node
+loses connection to b3scale, the <code>NodeState</code> will be <code>error</code>, but the AdminState
+will still be <code>ready</code>. Since <code>error</code> is not a desirable state, AdminState cannot be
+<code>error</code>.</p>
 <h2 id="enabling-a-backend">Enabling a backend</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><a href="#__codelineno-4-1"><span class="linenos" data-linenos="1 "></span></a>b3scalectl<span class="w"> </span>--api<span class="w"> </span>https://api.bbb.example.org<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>backend<span class="w"> </span>https://node23.bbb.example.org
 </span></code></pre></div>
