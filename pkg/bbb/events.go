@@ -34,6 +34,18 @@ type UserLeftMeetingEvent struct {
 	InternalID        string
 }
 
+// RecordingStartedEvent indicates that a user has left the meeting
+type RecordingStartedEvent struct {
+	InternalMeetingID string
+	InternalUserID    string
+}
+
+// RecordingStoppedEvent indicates that a user has left the meeting
+type RecordingStoppedEvent struct {
+	InternalMeetingID string
+	InternalUserID    string
+}
+
 // BreakoutRoomStartedEvent indicates the start of a breakout room
 type BreakoutRoomStartedEvent struct {
 	ParentInternalMeetingID string

@@ -91,6 +91,8 @@ func decodeEvent(msg *redis.Message) bbb.Event {
 		return safeDecode(decodeUserJoinedMeetingEvent, m)
 	case "UserLeftMeetingEvtMsg":
 		return safeDecode(decodeUserLeftMeetingEvent, m)
+	case "SetRecordingStatusCmdMsg":
+		return safeDecode(SetRecordingStatusEvent, m)
 	}
 
 	return nil
@@ -149,5 +151,15 @@ func decodeUserLeftMeetingEvent(m *Message) bbb.Event {
 	return &bbb.UserLeftMeetingEvent{
 		InternalMeetingID: header["meetingId"].(string),
 		InternalUserID:    header["userId"].(string),
+	}
+}
+
+func decodeSetRecordingStatusEvent(m *Message) bbb.Event {
+	header := m.Core.Header
+	body := m.Core.Body
+	return &bbb.RecordingStatusEvent{
+		InternalMeetingID: header["meetingId"].(string),
+		InternalUserID:    header["userId"].(string),
+		Recording:         body["recording"].(string),
 	}
 }
