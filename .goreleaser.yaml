@@ -22,18 +22,6 @@ builds:
     ldflags:
       - -s -w -X "github.com/b3scale/b3scale/pkg/config.Version={{ .Version }}" -X "github.com/b3scale/b3scale/pkg/config.Build={{ .Commit }}"
 
-  - main: ./cmd/b3scalenoded
-    env:
-      - CGO_ENABLED=0
-    id: "b3scalenoded"
-    binary: b3scalenoded 
-    goos:
-      - linux
-    goarch:
-      - amd64
-    ldflags:
-      - -s -w -X "github.com/b3scale/b3scale/pkg/config.Version={{ .Version }}" -X "github.com/b3scale/b3scale/pkg/config.Build={{ .Commit }}"
-
   - main: ./cmd/b3scaleagent
     env:
       - CGO_ENABLED=0
@@ -71,10 +59,6 @@ archives:
   - id: b3scaled
     builds: [ b3scaled ]
     name_template: 'b3scaled_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
-
-  - id: b3scalenoded
-    builds: [ b3scalenoded ]
-    name_template: 'b3scalenoded_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
 
   - id: b3scaleagent
     builds: [ b3scaleagent ]
